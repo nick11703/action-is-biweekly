@@ -1,0 +1,74 @@
+name: Branch Analysis
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  pull-requests: read # allows SonarCloud to decorate PRs with analysis results
+
+jobs:
+  lint-and-test:
+    name: Lint & Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # Use this custom action to provide consistent and fast dependency installs
+      - name: Install Dependencies
+        uses: ./.github/actions/install-dependencies
+
+      - name: Run ESLint
+        run: bun lint:ci
+
+      - name: Save ESLint Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: eslint-report
+          path: reports/eslint.json
+          if-no-files-found: error
+          retention-days: 1
+          overwrite: true
+
+      - name: Run Unit Tests
+        run: bun run test:ci
+
+      - name: Save LCOV Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: lcov-report
+          path: coverage/lcov.info
+          if-no-files-found: error
+          retention-days: 1
+          overwrite: true
+
+
+  sonarcloud:
+    name: SonarCloud
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+
+      # Download ESLint report to supply for sonar analysis
+      - uses: actions/download-artifact@v4
+        with:
+          name: eslint-report
+          path: reports
+      
+      # Download LCOV report to supply for sonar analysis
+      - uses: actions/download-artifact@v4
+        with:
+          name: lcov-report
+          path: coverage
+
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+  

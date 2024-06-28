@@ -1,0 +1,14 @@
+name: Install Dependencies
+description: Installs dependencies using caches when available
+
+runs:
+  using: composite
+  steps:
+    - name: Install Bun
+      uses: oven-sh/setup-bun@v1
+      with:
+        bun-version: latest
+
+    - name: Install Dependencies
+      shell: bash
+      run: bun install --frozen-lockfile
