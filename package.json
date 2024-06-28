@@ -7,7 +7,7 @@
   "scripts": {
     "test:ci": "bun test --coverage --coverage-reporter lcov",
     "lint": "eslint . && bun typecheck",
-    "lint:ci": "eslint --format json-with-metadata --output-file reports/eslint.json . || true && bun typecheck",
+    "lint:ci": "eslint --format json --output-file reports/eslint.json . || true && bun typecheck",
     "typecheck": "bun run node_modules/typescript/lib/tsc.js --noEmit --pretty"
   },
   "author": "Nicholas J. Fantozz",
