@@ -1,0 +1,20 @@
+name: Test is-biweekly action
+
+on:
+  workflow_dispatch:
+  schedule:
+  - cron: 0 16 * * 5
+
+jobs:
+  test-biweekly-action:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Test if this is a biweekly run
+      id: is-biweekly
+      uses: nick11703/action-is-biweekly@main
+      with:
+        comparison-date: '2024-06-28'
+      
+    - name: output biweekly results
+      run:  |
+        echo 'Is biweekly run: ${{ steps.is-biweekly.outputs.is-biweekly }}' >> $GITHUB_STEP_SUMMARY
