@@ -14,5 +14,4 @@ FROM install AS build
 COPY src src
 
 # run the app
-USER bun
 ENTRYPOINT [ "bun", "run", "/usr/src/app/src/index.ts" ]
