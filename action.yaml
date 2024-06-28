@@ -14,16 +14,8 @@ outputs:
     description: true/false if this is a biweekly run
     value: ${{ steps.is-biweekly.outputs.is-biweekly }}
 runs:
-  using: composite
-  steps:
-    - name: Install Bun
-      uses: oven-sh/setup-bun@v1
-      with:
-        bun-version: latest
-    - name: Install Dependencies
-      shell: bash
-      run: bun install --frozen-lockfile
-    - name: Is biweekly
-      shell: bash
-      id: is-biweekly
-      run: bun run src/index.ts
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.comparison-date }}
+    - ${{ inputs.fail-on-error }}
