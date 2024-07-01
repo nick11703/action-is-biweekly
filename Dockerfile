@@ -7,7 +7,6 @@ WORKDIR /usr/src/app
 # this will cache them and speed up future builds
 FROM base AS install
 COPY package.json bun.lockb ./
-ENV NODE_TLS_REJECT_UNAUTHORIZED=0
 RUN bun install --frozen-lockfile --production
 
 FROM install AS build
