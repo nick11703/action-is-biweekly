@@ -3,3 +3,6 @@
 # always enable coverage
 coverage = true
 coverageThreshold = { lines = 1.0, functions = 1.0 }
+
+# Load these modules before running tests.
+preload = ["./__mocks__/@actions/core.ts"]
