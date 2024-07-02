@@ -10,7 +10,7 @@ export default (): boolean => {
   const inputDates = getInput('comparison-date', { required: true })
   logger(`comparison-date: ${inputDates}`)
   // split the input into separate dates
-  const dates = inputDates.split(/\r|\n/).map((date) => date.trim())
+  const dates = inputDates.split(/[\r\n]/gm).map((date) => date.trim())
   logger(`parsed dates: ${dates}`)
   const biweekly = isBiweekly(dates)
 
