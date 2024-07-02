@@ -7,7 +7,6 @@ inputs:
     required: true
   fail-on-error:
     description: Fail the workflow if this is not a biweekly run
-    default: false
     required: false
 outputs:
   is-biweekly:
