@@ -1,9 +1,9 @@
-name: Test is-biweekly action
+name: Test standard biweekly run
 
 on:
   workflow_dispatch:
   schedule:
-  - cron: 0 16 * * 5
+  - cron: 0 16 * * 5 # Runs every friday
 
 jobs:
   test-biweekly-action:

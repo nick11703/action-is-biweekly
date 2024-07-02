@@ -11,16 +11,13 @@ All dates and times are processed as UTC times
 
 ## Inputs
 
-### `comparison-date`
-**Required** The time to compare the running build against (YYYY-MM-DD) or any JavaScript parsable time string or number
+- `comparison-date`: **(required)** The time to compare the running build against (YYYY-MM-DD) or any JavaScript parsable time string or number
 
-### `fail-on-error`
-Fail the current workflow if this is not a bi-weekly run
+- `fail-on-error`: Fail the current workflow if this is not a bi-weekly run
 
 ## Outputs
 
-### `is-biweekly`
-Boolean `true|false` if the current run is a biweekly run
+- `is-biweekly`: Boolean `true|false` if the current run is a biweekly run compared to input comparison date
 
 ## Example usage
 ```yaml

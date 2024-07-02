@@ -1,0 +1,26 @@
+name: Test multiple comparison dates - Runs daily, successful five times every 2 weeks
+
+on:
+  workflow_dispatch:
+  schedule:
+  - cron: 0 12 * * * # Everyday at noon
+
+jobs:
+  test-biweekly-action:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Test if this is a biweekly run, fail if not
+      id: is-biweekly
+      uses: nick11703/action-is-biweekly@main
+      with:
+        comparison-date: |-
+          '2024-06-28'
+          'Fri Dec 11 2020 19:00:00 GMT-0500 (Eastern Standard Time)'
+          'Wed, 19 Feb 2014 80:00:00 GMT'
+          1392768000000
+          'Sat Jun 22 2024 10:00:00 GMT'
+        fail-on-error: true
+      
+    - name: Output if not an error
+      run:  |
+        echo 'You will see this only when the test is a biweekly run. All others will be failed builds.' >> $GITHUB_STEP_SUMMARY
