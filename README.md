@@ -1,7 +1,7 @@
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=nick11703_action-is-biweekly&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=nick11703_action-is-biweekly)
 
 # is-biweekly
-GitHub action to determine if the currently running workflow a biweekly run
+GitHub action to determine if the currently running workflow is a biweekly run
 
 ## Concept
 This is intended to be used with a weekly cron task, but compare the current workflow run to a comparison date. This will determine if the current date is the same day of the week, and at a 2 week interval from that date.
