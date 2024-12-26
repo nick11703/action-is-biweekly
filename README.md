@@ -21,10 +21,12 @@ All dates and times are processed as UTC times
 ```javascript
 {
   biweekly: boolean // `true|false` if the current run is a biweekly run compared to input comparison date.
-  matchDates: {
-    original: string | number // Original date as input in epoch time or string date format
-    parsed: Date // The original date parsed in `Date` format
-  }
+  matchDates: [ // Array of matched date objects
+    {
+      original: string | number // Original date as input in epoch time or string date format
+      parsed: Date // The original date parsed in `Date` format
+    }
+  ]
 }
 ```
 
