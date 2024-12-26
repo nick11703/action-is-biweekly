@@ -17,7 +17,16 @@ All dates and times are processed as UTC times
 
 ## Outputs
 
-- `is-biweekly`: Boolean `true|false` if the current run is a biweekly run compared to input comparison date
+- `is-biweekly`: object
+```javascript
+{
+  biweekly: boolean // `true|false` if the current run is a biweekly run compared to input comparison date.
+  matchDates: {
+    original: string | number // Original date as input in epoch time or string date format
+    parsed: Date // The original date parsed in `Date` format
+  }
+}
+```
 
 ## Example usage
 ```yaml
@@ -33,12 +42,12 @@ jobs:
     steps:
     - name: Check if this is a biweekly run
       id: is-biweekly
-      uses: nick11703/action-is-biweekly@main
+      uses: nick11703/action-is-biweekly@v1
       with:
         comparison-date: '2024-06-28'
       
     - name: output biweekly results
-      if: ${{ steps.is-biweekly.outputs.is-biweekly }}
+      if: ${{ fromJSON(steps.is-biweekly.outputs.is-biweekly).biweekly }}
       run:  |
         echo 'This is a biweekly run of this workflow'
 ```

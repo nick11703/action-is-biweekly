@@ -1,10 +1,10 @@
 import { setOutput, getInput, setFailed } from '@actions/core'
-import { isBiweekly } from './biweekly'
+import { isBiweekly, type IsBiweekly } from './biweekly'
 import { debug } from 'debug'
 
 const logger = debug('is:biweekly')
 
-export default (): boolean => {
+export default (): IsBiweekly => {
   const failOnError = getInput('fail-on-error')
   logger(`fail-on-error: ${failOnError}`)
   const inputDates = getInput('comparison-date', { required: true })
@@ -15,12 +15,15 @@ export default (): boolean => {
   const biweekly = isBiweekly(dates)
 
   // always set the output with the results
-  setOutput('is-biweekly', biweekly.biweekly)
+  setOutput('is-biweekly', biweekly)
 
   if (failOnError && !biweekly.biweekly) {
     setFailed(`Action failed since this is not a biweekly run`)
-    return false
+    return {
+      biweekly: false,
+      matchDates: []
+    }
   }
   
-  return biweekly.biweekly
+  return biweekly
 }

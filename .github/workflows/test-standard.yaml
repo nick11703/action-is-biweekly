@@ -15,6 +15,12 @@ jobs:
       with:
         comparison-date: '2024-06-28'
       
-    - name: output biweekly results
+    - name: Output biweekly results if true
+      if: fromJSON(steps.is-biweekly.outputs.is-biweekly).biweekly
       run:  |
-        echo 'Is biweekly run: ${{ steps.is-biweekly.outputs.is-biweekly }}' >> $GITHUB_STEP_SUMMARY
+        echo 'Is biweekly run: ${{ fromJSON(steps.is-biweekly.outputs.is-biweekly).biweekly }}' >> $GITHUB_STEP_SUMMARY
+    
+    - name: Output biweekly results if false
+      if: ${{ !fromJSON(steps.is-biweekly.outputs.is-biweekly).biweekly }}
+      run:  |
+        echo 'Is biweekly run: ${{ fromJSON(steps.is-biweekly.outputs.is-biweekly).biweekly }}' >> $GITHUB_STEP_SUMMARY

@@ -20,7 +20,7 @@ describe('Verify action', () => {
     // Call the function
     const result = action()
     // Check the results
-    expect(result).toBe(true)
+    expect(result.biweekly).toBe(true)
     expect(setOutput).toBeCalledTimes(1)
     expect(setFailed).toHaveBeenCalledTimes(0)
   })
@@ -34,7 +34,7 @@ describe('Verify action', () => {
     // Call the function
     const result = action()
     // Check the results
-    expect(result).toBe(true)
+    expect(result.biweekly).toBe(true)
     expect(setOutput).toBeCalledTimes(1)
     expect(setFailed).toHaveBeenCalledTimes(0)
   })
@@ -50,7 +50,7 @@ describe('Verify action', () => {
     // Call the function
     const result = action()
     // Check the results
-    expect(result).toBe(true)
+    expect(result.biweekly).toBe(true)
     expect(setOutput).toBeCalledTimes(1)
     expect(setFailed).toHaveBeenCalledTimes(0)
   })
@@ -65,7 +65,7 @@ describe('Verify action', () => {
     // Call the function
     const result = action()
     // Check the results
-    expect(result).toBe(false)
+    expect(result.biweekly).toBe(false)
     expect(setOutput).toBeCalledTimes(1)
     expect(setFailed).toHaveBeenCalledTimes(0)
   })
@@ -82,6 +82,6 @@ describe('Verify action', () => {
     // Check the results
     expect(setOutput).toBeCalledTimes(1)
     expect(setFailed).toHaveBeenCalledTimes(1)
-    expect(result).toBe(false)
+    expect(result.biweekly).toBe(false)
   })
 })
