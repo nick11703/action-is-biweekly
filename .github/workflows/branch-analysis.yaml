@@ -11,6 +11,31 @@ permissions:
   pull-requests: read # allows SonarCloud to decorate PRs with analysis results
 
 jobs:
+  action-test:
+    name: Action Test
+    runs-on: ubuntu-latest
+    steps:
+    - name: Set current date
+      id: current
+      run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
+
+    - name: Test if this is a biweekly run, fail if not
+      id: is-biweekly
+      uses: ./
+      with:
+        comparison-date: ${{ steps.current.outputs.date }}
+        fail-on-error: true
+      
+    - name: Output if not an error
+      if: fromJSON(steps.is-biweekly.outputs.is-biweekly).biweekly
+      run:  |
+        echo 'You will see this only if the test passes.' >> $GITHUB_STEP_SUMMARY
+        echo '```' >> $GITHUB_STEP_SUMMARY
+        echo '// is-biweekly output' >> $GITHUB_STEP_SUMMARY
+        echo '${{ steps.is-biweekly.outputs.is-biweekly }}' | jq '.' >> $GITHUB_STEP_SUMMARY
+        echo '```' >> $GITHUB_STEP_SUMMARY
+
+
   lint-and-test:
     name: Lint & Test
     runs-on: ubuntu-latest
